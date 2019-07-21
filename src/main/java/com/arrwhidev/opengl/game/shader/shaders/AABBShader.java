@@ -1,11 +1,7 @@
 package com.arrwhidev.opengl.game.shader.shaders;
 
 import com.arrwhidev.opengl.engine.Camera;
-import com.arrwhidev.opengl.engine.shader.ShaderProgram;
 import com.arrwhidev.opengl.engine.ecs.component.mesh.Mesh;
-import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
-import com.arrwhidev.opengl.game.ecs.components.position.Position;
-import com.arrwhidev.opengl.game.ecs.misc.Transformation;
 import org.joml.Matrix4f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -13,7 +9,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
-public class AABBShader extends ShaderProgram {
+public class AABBShader extends BaseShader {
 
     private static final String NAME = "AABBShader";
     private static final String VERTEX_FILENAME = "aabb/vertex.vs";
@@ -23,8 +19,8 @@ public class AABBShader extends ShaderProgram {
     public static final int INPUT_LOCATION_POSITION = 0;
 
     @Override
-    public void render(Camera camera, Position position, Mesh mesh, Movement movement) {
-        setUniforms(camera, position, movement);
+    public void render(Camera camera, Mesh mesh, Matrix4f modelViewMatrix) {
+        setUniform(UNIFORM_PROJECTION_MATRIX, modelViewMatrix);
 
         // Bind mesh.
         glBindVertexArray(mesh.getVaoId());
@@ -48,11 +44,6 @@ public class AABBShader extends ShaderProgram {
         glBindVertexArray(0);
     }
 
-    private void setUniforms(Camera camera, Position position, Movement movement) {
-        Matrix4f modelViewMatrix = Transformation.getModelMatrix(camera, position, movement);
-        setUniform(UNIFORM_PROJECTION_MATRIX, modelViewMatrix);
-    }
-
     @Override
     public void createUniforms() {
         createUniform(UNIFORM_PROJECTION_MATRIX);
@@ -65,11 +56,26 @@ public class AABBShader extends ShaderProgram {
 
     @Override
     public String getVertexShaderFilename() {
-        return VERTEX_FILENAME;
+        return withBasePath(VERTEX_FILENAME);
     }
 
     @Override
     public String getFragmentShaderFilename() {
-        return FRAGMENT_FILENAME;
+        return withBasePath(FRAGMENT_FILENAME);
+    }
+
+    @Override
+    public int getInputLocationPos() {
+        return INPUT_LOCATION_POSITION;
+    }
+
+    @Override
+    public int getInputLocationTextureCoords() {
+        return 0; // TODO: come back to this.
+    }
+
+    @Override
+    public int getInputLocationColour() {
+        return 0; // TODO: come back to this.
     }
 }

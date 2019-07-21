@@ -1,5 +1,6 @@
 package com.arrwhidev.opengl.engine.ecs.component.mesh;
 
+import com.arrwhidev.opengl.engine.shader.ShaderProgram;
 import com.arrwhidev.opengl.engine.texture.Texture;
 
 import java.util.ArrayList;
@@ -9,12 +10,13 @@ public class MeshComponentManager {
 
     private static final List<Mesh> components = new ArrayList<>(1024);
 
-    public static int create(int width, int height, Texture texture, float[] colours) {
-        components.add(new Mesh(width, height, texture, colours));
+    public static int create(int width, int height, Texture texture, ShaderProgram shader, float[] colours) {
+        components.add(new Mesh(width, height, texture, colours, shader));
         return components.size() - 1;
     }
-    public static int create(int width, int height, Texture texture) {
-        return create(width, height, texture, null);
+
+    public static int create(int width, int height, Texture texture, ShaderProgram shader) {
+        return create(width, height, texture, shader,null);
     }
 
     public static Mesh get(int id) {

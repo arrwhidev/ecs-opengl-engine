@@ -14,8 +14,8 @@ import com.arrwhidev.opengl.game.ecs.components.movement.MovementComponentManage
 import com.arrwhidev.opengl.game.ecs.components.position.HasPosition;
 import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import com.arrwhidev.opengl.game.ecs.components.position.PositionComponentManager;
-import com.arrwhidev.opengl.game.shader.ShaderManager;
-import com.arrwhidev.opengl.game.shader.ShaderType;
+import com.arrwhidev.opengl.game.ecs.misc.Transformation;
+import com.arrwhidev.opengl.game.shader.Shaders;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 
@@ -32,17 +32,17 @@ public class MyRenderer extends Renderer {
             Position position = PositionComponentManager.get((HasPosition) e);
             Movement movement = MovementComponentManager.get((HasMovement) e);
 
-            render(mesh, position, movement, ShaderManager.get(mesh.getShaderType()));
+            render(mesh, position, movement, mesh.getSp());
 
             if (KeyboardInput.instance().isDown(GLFW_KEY_DOWN)) {
-                render(mesh, position, movement, ShaderManager.get(ShaderType.AABB));
+                render(mesh, position, movement, Shaders.AABB.getShader());
             }
         }
     }
 
     private void render(Mesh mesh, Position position, Movement movement, ShaderProgram shaderProgram) {
         shaderProgram.bind();
-        shaderProgram.render(camera, position, mesh, movement);
+        shaderProgram.render(camera, mesh, Transformation.getModelMatrix(camera, position, movement));
         shaderProgram.unbind();
     }
 }

@@ -1,9 +1,8 @@
 package com.arrwhidev.opengl.engine.ecs.component.mesh;
 
 import com.arrwhidev.opengl.engine.ecs.component.Component;
+import com.arrwhidev.opengl.engine.shader.ShaderProgram;
 import com.arrwhidev.opengl.engine.texture.Texture;
-import com.arrwhidev.opengl.game.shader.ShaderType;
-import com.arrwhidev.opengl.game.shader.shaders.GameObjectShader;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.system.MemoryUtil;
 
@@ -24,14 +23,14 @@ public class Mesh implements Component {
     private float[] textCoords;
     private float[] colours;
     private int[] indices;
-    private ShaderType shaderType;
+    private ShaderProgram sp;
 
     private final int vaoId;
     private final List<Integer> vboIdList;
     private final int vertexCount;
     private final Texture texture;
 
-    public Mesh(float width, float height, Texture texture, float[] coloursarr) {
+    public Mesh(float width, float height, Texture texture, float[] coloursarr, ShaderProgram sp) {
         this.width = width;
         this.height = height;
 
@@ -59,7 +58,7 @@ public class Mesh implements Component {
             1.0f, 1.0f,
             1.0f, 0.0f
         };
-        this.shaderType = ShaderType.GAME_OBJECT;
+        this.sp = sp;
         this.texture = texture;
 
         FloatBuffer posBuffer = null;
@@ -81,7 +80,7 @@ public class Mesh implements Component {
             posBuffer.put(positions).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
-            GL20.glVertexAttribPointer(GameObjectShader.INPUT_LOCATION_POSITION, 2, GL_FLOAT, false, 0, 0);
+            GL20.glVertexAttribPointer(sp.getInputLocationPos(), 2, GL_FLOAT, false, 0, 0);
 
             // Texture coordinates VBO
             vboId = glGenBuffers();
@@ -90,7 +89,7 @@ public class Mesh implements Component {
             textCoordsBuffer.put(textCoords).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
-            GL20.glVertexAttribPointer(GameObjectShader.INPUT_LOCATION_TEXTURE_COORDS, 2, GL_FLOAT, false, 0, 0);
+            GL20.glVertexAttribPointer(sp.getInputLocationTextureCoords(), 2, GL_FLOAT, false, 0, 0);
 
             // Colour VBO
             vboId = glGenBuffers();
@@ -99,7 +98,7 @@ public class Mesh implements Component {
             textCoordsBuffer.put(colours).flip();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, colours, GL_STATIC_DRAW);
-            GL20.glVertexAttribPointer(GameObjectShader.INPUT_LOCATION_COLOUR, 3, GL_FLOAT, false, 0, 0);
+            GL20.glVertexAttribPointer(sp.getInputLocationColour(), 3, GL_FLOAT, false, 0, 0);
 
             // Index VBO
             vboId = glGenBuffers();
@@ -159,12 +158,8 @@ public class Mesh implements Component {
         this.indices = indices;
     }
 
-    public ShaderType getShaderType() {
-        return shaderType;
-    }
-
-    public void setShaderType(ShaderType shaderType) {
-        this.shaderType = shaderType;
+    public ShaderProgram getSp() {
+        return sp;
     }
 
     public int getVaoId() {

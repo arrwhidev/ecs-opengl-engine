@@ -20,5 +20,4 @@ public class TextureManager {
     public static Texture get(TextureType tt) {
         return textures.get(tt);
     }
-
 }

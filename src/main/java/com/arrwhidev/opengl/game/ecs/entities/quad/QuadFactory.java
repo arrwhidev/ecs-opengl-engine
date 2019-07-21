@@ -7,6 +7,7 @@ import com.arrwhidev.opengl.engine.ecs.component.mesh.MeshComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.movement.MovementComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.position.PositionComponentManager;
 import com.arrwhidev.opengl.engine.ecs.entity.EntityManager;
+import com.arrwhidev.opengl.game.shader.Shaders;
 import com.arrwhidev.opengl.game.util.RandomUtils;
 import org.joml.Vector2f;
 
@@ -32,7 +33,7 @@ public class QuadFactory {
 
         int position = PositionComponentManager.create(x, y, width, height, 1);
         int movement = MovementComponentManager.create(velocity, acceleration);
-        int mesh = MeshComponentManager.create(width, height, EMPTY_TEXTURE, colour);
+        int mesh = MeshComponentManager.create(width, height, EMPTY_TEXTURE, Shaders.GAME_OBJECT.getShader(), colour);
         Quad quad = new Quad(position, movement, mesh);
 
         EntityManager.add(quad);
@@ -49,7 +50,7 @@ public class QuadFactory {
 
         int position = PositionComponentManager.create(pos.x, pos.y, size, size, 1);
         int movement = MovementComponentManager.create(velocity, acceleration);
-        int mesh = MeshComponentManager.create(size, size, EMPTY_TEXTURE, colour);
+        int mesh = MeshComponentManager.create(size, size, EMPTY_TEXTURE, Shaders.GAME_OBJECT.getShader(), colour);
         Quad quad = new Quad(position, movement, mesh);
 
         EntityManager.add(quad);

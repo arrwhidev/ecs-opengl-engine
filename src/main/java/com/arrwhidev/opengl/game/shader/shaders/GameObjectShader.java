@@ -1,11 +1,7 @@
 package com.arrwhidev.opengl.game.shader.shaders;
 
 import com.arrwhidev.opengl.engine.Camera;
-import com.arrwhidev.opengl.engine.shader.ShaderProgram;
 import com.arrwhidev.opengl.engine.ecs.component.mesh.Mesh;
-import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
-import com.arrwhidev.opengl.game.ecs.components.position.Position;
-import com.arrwhidev.opengl.game.ecs.misc.Transformation;
 import org.joml.Matrix4f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -15,7 +11,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
-public class GameObjectShader extends ShaderProgram {
+public class GameObjectShader extends BaseShader {
 
     private static final String NAME = "GameObjectShader";
     private static final String VERTEX_FILENAME = "gameObject/vertex.vs";
@@ -29,8 +25,8 @@ public class GameObjectShader extends ShaderProgram {
     public static final int INPUT_LOCATION_COLOUR = 2;
 
     @Override
-    public void render(Camera camera, Position position, Mesh mesh, Movement movement) {
-        setUniforms(camera, position, movement);
+    public void render(Camera camera, Mesh mesh, Matrix4f modelViewMatrix) {
+        setUniforms(modelViewMatrix);
 
         // Activate texture slot.
         glActiveTexture(GL_TEXTURE0);
@@ -58,9 +54,8 @@ public class GameObjectShader extends ShaderProgram {
         glBindVertexArray(0);
     }
 
-    private void setUniforms(Camera camera, Position position, Movement movement) {
+    private void setUniforms(Matrix4f modelViewMatrix) {
         setUniform(UNIFORM_TEXTURE, 0);
-        Matrix4f modelViewMatrix = Transformation.getModelMatrix(camera, position, movement);
         setUniform(UNIFORM_PROJECTION_MATRIX, modelViewMatrix);
     }
 
@@ -77,11 +72,26 @@ public class GameObjectShader extends ShaderProgram {
 
     @Override
     public String getVertexShaderFilename() {
-        return VERTEX_FILENAME;
+        return withBasePath(VERTEX_FILENAME);
     }
 
     @Override
     public String getFragmentShaderFilename() {
-        return FRAGMENT_FILENAME;
+        return withBasePath(FRAGMENT_FILENAME);
+    }
+
+    @Override
+    public int getInputLocationPos() {
+        return INPUT_LOCATION_POSITION;
+    }
+
+    @Override
+    public int getInputLocationTextureCoords() {
+        return INPUT_LOCATION_TEXTURE_COORDS;
+    }
+
+    @Override
+    public int getInputLocationColour() {
+        return INPUT_LOCATION_COLOUR;
     }
 }

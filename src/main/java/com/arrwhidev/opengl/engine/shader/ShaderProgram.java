@@ -2,8 +2,6 @@ package com.arrwhidev.opengl.engine.shader;
 
 import com.arrwhidev.opengl.engine.Camera;
 import com.arrwhidev.opengl.engine.ecs.component.mesh.Mesh;
-import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
-import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
 
@@ -32,7 +30,10 @@ public abstract class ShaderProgram {
     public abstract String getVertexShaderFilename();
     public abstract String getFragmentShaderFilename();
     public abstract void createUniforms();
-    public abstract void render(Camera camera, Position position, Mesh mesh, Movement movement);
+    public abstract void render(Camera camera, Mesh mesh, Matrix4f modelViewMatrix);
+    public abstract int getInputLocationPos();
+    public abstract int getInputLocationTextureCoords();
+    public abstract int getInputLocationColour();
 
     public void createUniform(String uniformName) {
         int uniformLocation = glGetUniformLocation(programId, uniformName);
