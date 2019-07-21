@@ -8,8 +8,9 @@ public class FPS {
     private int tickindex = 0;
     private int ticksum = 0;
     private int[] ticklist = null;
+    private int fps;
 
-    public int calculate(int newtick) {
+    public void calculate(int newtick) {
         if (ticklist == null) {
             ticklist = new int[MAX_SAMPLES];
             Arrays.fill(ticklist, 0);
@@ -22,6 +23,10 @@ public class FPS {
             tickindex = 0;
         }
 
-        return ticksum / MAX_SAMPLES;
+        fps = ticksum / MAX_SAMPLES;
+    }
+
+    public int getFps() {
+        return fps;
     }
 }

@@ -18,6 +18,15 @@ public class GameLoop {
     }
 
     public void run(Window window) {
+        new Thread(() -> {
+            while(isRunning && !window.windowShouldClose()) {
+                System.out.println("FPS: " + fps.getFps());
+                try {
+                    Thread.sleep(1000 * 2);
+                } catch (InterruptedException e) {}
+            }
+        }).start();
+
         long previousTime = System.nanoTime();
         double accumulatedTime = 0;
 
@@ -36,7 +45,7 @@ public class GameLoop {
                 accumulatedTime -= TIMESTEP;
             }
 
-            // TODO: Render when engine supports text - fps.calculate((int) (1.0f / deltaTime));
+            fps.calculate((int) (1.0f / deltaTime));
             engine.render();
 
             previousTime = currentTime;
