@@ -1,4 +1,4 @@
-package com.arrwhidev.opengl.engine.ecs;
+package com.arrwhidev.opengl.engine.ecs.entity;
 
 public interface Entity {
     int getId();

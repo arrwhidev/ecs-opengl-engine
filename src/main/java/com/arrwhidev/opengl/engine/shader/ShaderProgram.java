@@ -1,7 +1,7 @@
 package com.arrwhidev.opengl.engine.shader;
 
 import com.arrwhidev.opengl.engine.Camera;
-import com.arrwhidev.opengl.game.ecs.components.mesh.Mesh;
+import com.arrwhidev.opengl.engine.ecs.component.mesh.Mesh;
 import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
 import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import org.joml.Matrix4f;

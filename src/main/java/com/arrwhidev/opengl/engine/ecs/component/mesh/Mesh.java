@@ -1,6 +1,6 @@
-package com.arrwhidev.opengl.game.ecs.components.mesh;
+package com.arrwhidev.opengl.engine.ecs.component.mesh;
 
-import com.arrwhidev.opengl.engine.ecs.Component;
+import com.arrwhidev.opengl.engine.ecs.component.Component;
 import com.arrwhidev.opengl.engine.texture.Texture;
 import com.arrwhidev.opengl.game.shader.ShaderType;
 import com.arrwhidev.opengl.game.shader.shaders.GameObjectShader;

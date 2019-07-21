@@ -1,14 +1,14 @@
 package com.arrwhidev.opengl.game.ecs.systems;
 
-import com.arrwhidev.opengl.engine.ecs.Entity;
-import com.arrwhidev.opengl.engine.ecs.System;
+import com.arrwhidev.opengl.engine.ecs.entity.Entity;
+import com.arrwhidev.opengl.engine.ecs.system.System;
 import com.arrwhidev.opengl.game.ecs.components.movement.HasMovement;
 import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
 import com.arrwhidev.opengl.game.ecs.components.movement.MovementComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.position.HasPosition;
 import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import com.arrwhidev.opengl.game.ecs.components.position.PositionComponentManager;
-import com.arrwhidev.opengl.game.ecs.entities.EntityManager;
+import com.arrwhidev.opengl.engine.ecs.entity.EntityManager;
 import org.joml.Vector2f;
 
 public class MovementSystem implements System {

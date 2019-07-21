@@ -3,8 +3,10 @@ package com.arrwhidev.opengl.game;
 import com.arrwhidev.opengl.engine.Window;
 import com.arrwhidev.opengl.engine.input.mouse.MouseInput;
 import com.arrwhidev.opengl.engine.input.mouse.event.MouseClickEvent;
-import com.arrwhidev.opengl.game.ecs.entities.player.PlayerFactory;
 import com.arrwhidev.opengl.game.ecs.entities.quad.QuadFactory;
+import org.joml.Vector2f;
+
+import java.util.stream.IntStream;
 
 import static com.arrwhidev.opengl.engine.input.mouse.event.MouseClickEvent.Action.PRESS;
 
@@ -26,12 +28,14 @@ public class TestEntityFactory {
     }
 
     public void createTestEntities(Window window) {
-        PlayerFactory.create(100, 100);
+//        PlayerFactory.create(100, 100);
 
-//        QuadFactory.createRandom(
-//                new Vector2f(400, 400),
-//                new Vector2f(160, 100),
-//                10);
+//        IntStream.range(0, 5).forEach(i -> QuadFactory.createRandom(window));
+
+        QuadFactory.createRandom(
+                new Vector2f(400, 400),
+                new Vector2f(160, 100),
+                20);
 //
 //        QuadFactory.createRandom(
 //                new Vector2f(500, 500),

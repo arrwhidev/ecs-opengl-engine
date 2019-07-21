@@ -1,6 +1,6 @@
 package com.arrwhidev.opengl.game.ecs.components.movement;
 
-import com.arrwhidev.opengl.engine.ecs.Component;
+import com.arrwhidev.opengl.engine.ecs.component.Component;
 import org.joml.Vector2f;
 
 public class Movement implements Component {

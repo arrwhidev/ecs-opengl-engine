@@ -1,8 +1,8 @@
 package com.arrwhidev.opengl.game.ecs.entities.quad;
 
 
-import com.arrwhidev.opengl.engine.ecs.Entity;
-import com.arrwhidev.opengl.game.ecs.components.mesh.HasMesh;
+import com.arrwhidev.opengl.engine.ecs.entity.Entity;
+import com.arrwhidev.opengl.engine.ecs.component.mesh.HasMesh;
 import com.arrwhidev.opengl.game.ecs.components.movement.HasMovement;
 import com.arrwhidev.opengl.game.ecs.components.position.HasPosition;
 

@@ -1,4 +1,4 @@
-package com.arrwhidev.opengl.game.ecs.components.mesh;
+package com.arrwhidev.opengl.engine.ecs.component.mesh;
 
 import com.arrwhidev.opengl.engine.texture.Texture;
 

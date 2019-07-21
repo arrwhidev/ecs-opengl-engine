@@ -1,15 +1,15 @@
 package com.arrwhidev.opengl.game.ecs.systems;
 
 import com.arrwhidev.opengl.engine.Window;
-import com.arrwhidev.opengl.engine.ecs.Entity;
-import com.arrwhidev.opengl.engine.ecs.System;
+import com.arrwhidev.opengl.engine.ecs.entity.Entity;
+import com.arrwhidev.opengl.engine.ecs.system.System;
 import com.arrwhidev.opengl.game.ecs.components.movement.HasMovement;
 import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
 import com.arrwhidev.opengl.game.ecs.components.movement.MovementComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.position.HasPosition;
 import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import com.arrwhidev.opengl.game.ecs.components.position.PositionComponentManager;
-import com.arrwhidev.opengl.game.ecs.entities.EntityManager;
+import com.arrwhidev.opengl.engine.ecs.entity.EntityManager;
 import org.joml.Vector2f;
 
 import static com.arrwhidev.opengl.game.util.MathUtils.rotate;
@@ -18,7 +18,7 @@ public class CollisionSystem implements System {
 
     private Window window;
 
-    CollisionSystem(Window window) {
+    public CollisionSystem(Window window) {
         this.window = window;
     }
 
@@ -31,14 +31,14 @@ public class CollisionSystem implements System {
                 Movement movement = MovementComponentManager.get((HasMovement) e1);
                 checkScreenBounds(position, movement);
 
-                for (int j = i + 1; j < EntityManager.getEntities().size(); j++) {
-                    Entity e2 = EntityManager.getEntities().get(j);
-                    if (e2 instanceof HasPosition) {
-                        Position position2 = PositionComponentManager.get((HasPosition) e2);
-                        Movement movement2 = MovementComponentManager.get((HasMovement) e2);
-                        checkEntityCollision(position, position2, movement, movement2);
-                    }
-                }
+//                for (int j = i + 1; j < EntityManager.getEntities().size(); j++) {
+//                    Entity e2 = EntityManager.getEntities().get(j);
+//                    if (e2 instanceof HasPosition) {
+//                        Position position2 = PositionComponentManager.get((HasPosition) e2);
+//                        Movement movement2 = MovementComponentManager.get((HasMovement) e2);
+//                        checkEntityCollision(position, position2, movement, movement2);
+//                    }
+//                }
             }
         }
     }

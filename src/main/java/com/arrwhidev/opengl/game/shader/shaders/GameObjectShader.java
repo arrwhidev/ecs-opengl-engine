@@ -2,7 +2,7 @@ package com.arrwhidev.opengl.game.shader.shaders;
 
 import com.arrwhidev.opengl.engine.Camera;
 import com.arrwhidev.opengl.engine.shader.ShaderProgram;
-import com.arrwhidev.opengl.game.ecs.components.mesh.Mesh;
+import com.arrwhidev.opengl.engine.ecs.component.mesh.Mesh;
 import com.arrwhidev.opengl.game.ecs.components.movement.Movement;
 import com.arrwhidev.opengl.game.ecs.components.position.Position;
 import com.arrwhidev.opengl.game.ecs.misc.Transformation;

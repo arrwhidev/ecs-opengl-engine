@@ -26,7 +26,8 @@ public class FPS {
         fps = ticksum / MAX_SAMPLES;
     }
 
-    public int getFps() {
-        return fps;
+    @Override
+    public String toString() {
+        return "FPS: " + fps;
     }
 }

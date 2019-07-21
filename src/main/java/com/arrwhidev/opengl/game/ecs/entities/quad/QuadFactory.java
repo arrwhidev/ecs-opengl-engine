@@ -3,10 +3,10 @@ package com.arrwhidev.opengl.game.ecs.entities.quad;
 import com.arrwhidev.opengl.engine.Window;
 import com.arrwhidev.opengl.engine.texture.EmptyTexture;
 import com.arrwhidev.opengl.engine.texture.Texture;
-import com.arrwhidev.opengl.game.ecs.components.mesh.MeshComponentManager;
+import com.arrwhidev.opengl.engine.ecs.component.mesh.MeshComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.movement.MovementComponentManager;
 import com.arrwhidev.opengl.game.ecs.components.position.PositionComponentManager;
-import com.arrwhidev.opengl.game.ecs.entities.EntityManager;
+import com.arrwhidev.opengl.engine.ecs.entity.EntityManager;
 import com.arrwhidev.opengl.game.util.RandomUtils;
 import org.joml.Vector2f;
 
