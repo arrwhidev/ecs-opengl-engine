@@ -28,7 +28,7 @@ public class UntitledGame implements GameLogic {
         TextureManager.load(Textures.all());
 
         camera = new Camera(window);
-        renderer = new MyRenderer(camera);
+        renderer = new GameRenderer(camera);
         systemManager = new SystemManager(window, asList(
             new MovementSystem(),
             new CollisionSystem(window))

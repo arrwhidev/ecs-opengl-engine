@@ -19,9 +19,9 @@ import com.arrwhidev.opengl.game.shader.Shaders;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 
-public class MyRenderer extends Renderer {
+public class GameRenderer extends Renderer {
 
-    public MyRenderer(Camera camera) {
+    public GameRenderer(Camera camera) {
         super(camera);
     }
 

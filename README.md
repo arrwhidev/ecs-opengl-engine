@@ -10,9 +10,9 @@ I've kept the 'game' and the 'engine' separate in a top level package. Eventuall
 
 I read about the ECS (Entity Component System) game engine pattern and decided to implement it. All other games I've worked on previously followed a more conventional OO architecture and the code often ended up messy and difficult to reason about. So far I like the ECS pattern!
 
-## Thoughts
+## Thoughts for the future
 
-- I'm not entirely happy with how the Renderer/Shader/Mesh relate, it's a bit messy. There's no clear distinction between the 'game' and the 'engine'. It works but it needs fixing.
+- I'm not entirely happy with how the Renderer/Shader/Mesh relate, it's a bit messy. It works but it needs tidying.
 - Is the granularity of Components/Systems ok?
 - Not made any serious attempt to optimise performance yet. Plan: write the code simple and understandable, then make it fast.
 
@@ -21,8 +21,7 @@ I read about the ECS (Entity Component System) game engine pattern and decided t
 - Only tested on OSX. Everything should work on other platforms by specifying different platform bindings in `pom.xml`.
 - When running on OSX you need to run with the following VM property `-XstartOnFirstThread`.
 - Run `com.arrwhidev.opengl.game.Main.java`.
-- Left/Right arrows move the character.
-- Left mouse click will create a random quad at the cursor location. 
+- Left mouse click will create a random quad at the cursor location.
 
 ## Resources
 
