@@ -77,6 +77,8 @@ public class Window {
         if (isvSync()) {
             // Enable v-sync
             glfwSwapInterval(1);
+        } else {
+            glfwSwapInterval(0);
         }
 
         // Make the window visible

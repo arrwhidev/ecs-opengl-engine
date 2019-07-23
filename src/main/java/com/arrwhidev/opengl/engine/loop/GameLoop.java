@@ -25,6 +25,11 @@ public class GameLoop {
     public void run(Window window) {
         startThreadToPrintFps(window);
 
+        long timer = System.currentTimeMillis();
+
+        int frames = 0;
+        int updates = 0;
+
         double nextUpdate = time();
         float interpolation;
         while (isRunning && !window.windowShouldClose()) {
@@ -32,22 +37,31 @@ public class GameLoop {
             while(time() > nextUpdate) {
                 engine.update(DT);
                 nextUpdate += NS_BETWEEN_TICKS;
+                updates++;
             }
 
             interpolation = (float) (time() + NS_BETWEEN_TICKS - nextUpdate) / (float) NS_BETWEEN_TICKS;
             engine.render(interpolation);
+            frames++;
+
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                System.out.println("ups="+updates+",fps="+frames);
+                updates = 0;
+                frames = 0;
+            }
         }
     }
 
     private void startThreadToPrintFps(Window window) {
-        new Thread(() -> {
-            while(isRunning && !window.windowShouldClose()) {
-                System.out.println(fps);
-                try {
-                    Thread.sleep(1000 * 2);
-                } catch (InterruptedException e) {}
-            }
-        }).start();
+//        new Thread(() -> {
+//            while(isRunning && !window.windowShouldClose()) {
+//                System.out.println(fps);
+//                try {
+//                    Thread.sleep(1000 * 2);
+//                } catch (InterruptedException e) {}
+//            }
+//        }).start();
     }
 
     public static void main(String[] args) {
