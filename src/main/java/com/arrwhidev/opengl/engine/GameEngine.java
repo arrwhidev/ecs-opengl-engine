@@ -53,8 +53,8 @@ public class GameEngine implements Runnable {
         gameLogic.update(dt);
     }
 
-    public void render() {
-        gameLogic.render(window);
+    public void render(float interpolation) {
+        gameLogic.render(window, interpolation);
         window.update();
     }
 

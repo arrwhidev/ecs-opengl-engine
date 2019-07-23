@@ -12,16 +12,16 @@ public abstract class Renderer {
         this.camera = camera;
     }
 
-    public final void render() {
+    public final void render(float interpolation) {
         clear();
         windowResized();
-        renderEntities();
+        renderEntities(interpolation);
     }
 
-    public abstract void renderEntity(Entity e);
+    public abstract void renderEntity(Entity e, float interpolation);
 
-    private void renderEntities() {
-        EntityManager.getEntities().forEach(this::renderEntity);
+    private void renderEntities(float interpolation) {
+        EntityManager.getEntities().forEach(e -> renderEntity(e, interpolation));
     }
 
     private final void clear() {

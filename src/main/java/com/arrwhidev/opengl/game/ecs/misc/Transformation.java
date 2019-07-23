@@ -9,21 +9,16 @@ public class Transformation {
 
     private static final Matrix4f MODEL_VIEW_MATRIX = new Matrix4f();
 
-    public static Matrix4f getModelMatrix(Camera camera, Position position, Movement movement) {
-        // TODO: If facing left we need to flip the texture horizontally.
-        // Is this the best way to achieve this?
-        if(movement.isFacingLeft()) {
-            return MODEL_VIEW_MATRIX.identity()
+    public static Matrix4f getModelMatrix(Camera camera, Position position, Movement movement, float interp) {
+
+        float newX = ((position.x() - position.prevX()) * interp) + position.x();
+        float newY = ((position.y() - position.prevY()) * interp) + position.y();
+
+        return MODEL_VIEW_MATRIX.identity()
                 .mul(camera.getProjection())
-                .translate(position.x() + (position.getWidth() * position.getScale()), position.y(), 0)
-                .scale(position.getScale())
-                .scale(-1, 1 ,1);
-        } else {
-            return MODEL_VIEW_MATRIX.identity()
-                .mul(camera.getProjection())
-                .translate(position.x(), position.y(), 0)
+                .translate(newX, newY,0)
                 .scale(position.getScale());
-        }
+
 
         // TODO: Add rotation here when implemented in game objects.
         // .rotateX((float)Math.toRadians(-rotation.x))

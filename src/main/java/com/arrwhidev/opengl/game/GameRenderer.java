@@ -26,23 +26,23 @@ public class GameRenderer extends Renderer {
     }
 
     @Override
-    public void renderEntity(Entity e) {
+    public void renderEntity(Entity e, float interpolation) {
         if (e instanceof HasMesh && e instanceof HasPosition && e instanceof HasMovement) {
             Mesh mesh = MeshComponentManager.get((HasMesh) e);
             Position position = PositionComponentManager.get((HasPosition) e);
             Movement movement = MovementComponentManager.get((HasMovement) e);
 
-            render(mesh, position, movement, mesh.getSp());
+            render(mesh, position, movement, mesh.getSp(), interpolation);
 
             if (KeyboardInput.instance().isDown(GLFW_KEY_DOWN)) {
-                render(mesh, position, movement, Shaders.AABB.getShader());
+                render(mesh, position, movement, Shaders.AABB.getShader(), interpolation);
             }
         }
     }
 
-    private void render(Mesh mesh, Position position, Movement movement, ShaderProgram shaderProgram) {
+    private void render(Mesh mesh, Position position, Movement movement, ShaderProgram shaderProgram, float interpolation) {
         shaderProgram.bind();
-        shaderProgram.render(camera, mesh, Transformation.getModelMatrix(camera, position, movement));
+        shaderProgram.render(camera, mesh, Transformation.getModelMatrix(camera, position, movement, interpolation));
         shaderProgram.unbind();
     }
 }

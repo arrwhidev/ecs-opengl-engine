@@ -5,6 +5,7 @@ import org.joml.Vector2f;
 
 public class Position implements Component {
 
+    public Vector2f previousPosition;
     public Vector2f position;
     private int width, height;
     private float scale;
@@ -14,6 +15,7 @@ public class Position implements Component {
         this.width = width;
         this.height = height;
         this.scale = scale;
+        updatePrevious();
     }
 
     public Vector2f center() {
@@ -23,11 +25,16 @@ public class Position implements Component {
     }
 
     public void add(Vector2f pos) {
+        updatePrevious();
         position.add(pos);
     }
 
-    public void sub(Vector2f pos) {
-        position.sub(pos);
+    public float prevX() {
+        return previousPosition.x;
+    }
+
+    public float prevY() {
+        return previousPosition.y;
     }
 
     public float x() {
@@ -47,18 +54,22 @@ public class Position implements Component {
     }
 
     public void setLeft(float left) {
+        updatePrevious();
         position.x = left;
     }
 
     public void setRight(float right) {
+        updatePrevious();
         position.x = right - (width * scale);
     }
 
     public void setTop(float top) {
+        updatePrevious();
         position.y = top;
     }
 
     public void setBottom(float bottom) {
+        updatePrevious();
         position.y = bottom - (height * scale);
     }
 
@@ -82,23 +93,7 @@ public class Position implements Component {
         return height * scale;
     }
 
-//    public boolean isFacingRight() {
-//        return facingRight;
-//    }
-//
-//    public boolean isFacingLeft() {
-//        return !facingRight;
-//    }
-//
-//    public void turnAround() {
-//        facingRight = !facingRight;
-//    }
-//
-//    public void faceLeft() {
-//        facingRight = false;
-//    }
-//
-//    public void faceRight() {
-//        facingRight = true;
-//    }
+    private void updatePrevious() {
+        previousPosition = new Vector2f(position);
+    }
 }

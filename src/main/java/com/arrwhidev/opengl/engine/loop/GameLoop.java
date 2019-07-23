@@ -5,8 +5,9 @@ import com.arrwhidev.opengl.engine.Window;
 
 public class GameLoop {
 
-    private static final int FPS = 60;
-    private static final float DT = 1.0f / FPS;
+    private static final int UPDATES_PER_SECOND = 30;
+    private static final int MILLISECONDS_BETWEEN_TICKS = 1000 / UPDATES_PER_SECOND;
+    private static final float DT = 1.0f / UPDATES_PER_SECOND;
 
     private boolean isRunning = true;
     private FPS fps;
@@ -20,27 +21,17 @@ public class GameLoop {
     public void run(Window window) {
         startThreadToPrintFps(window);
 
-        float accumulator = 0.0f;
-        long currentTime = System.currentTimeMillis();
-
+        long nextUpdate = System.currentTimeMillis();
+        float interpolation;
         while (isRunning && !window.windowShouldClose()) {
-            long newTime = System.currentTimeMillis();
-            float frameTime = (newTime - currentTime) / 1000.0f;
 
-            // Avoid spiral of death
-            if (frameTime > 0.25f) frameTime = 0.25f;
-
-            currentTime = newTime;
-            accumulator += frameTime;
-
-            // Logic update
-            while (accumulator >= DT)  {
-                accumulator -= DT;
+            while(System.currentTimeMillis() > nextUpdate) {
                 engine.update(DT);
+                nextUpdate += MILLISECONDS_BETWEEN_TICKS;
             }
 
-            fps.calculate((int) (1.0f / DT));
-            engine.render();
+            interpolation = (float) (System.currentTimeMillis() + MILLISECONDS_BETWEEN_TICKS - nextUpdate) / (float) MILLISECONDS_BETWEEN_TICKS;
+            engine.render(interpolation);
         }
     }
 

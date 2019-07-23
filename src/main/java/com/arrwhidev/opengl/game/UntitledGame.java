@@ -56,8 +56,8 @@ public class UntitledGame implements GameLogic {
     }
 
     @Override
-    public void render(Window window) {
-        renderer.render();
+    public void render(Window window, float interpolation) {
+        renderer.render(interpolation);
     }
 
     @Override
