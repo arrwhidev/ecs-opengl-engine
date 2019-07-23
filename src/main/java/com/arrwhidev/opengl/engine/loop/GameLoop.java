@@ -6,7 +6,7 @@ import com.arrwhidev.opengl.engine.Window;
 public class GameLoop {
 
     private static final int UPDATES_PER_SECOND = 30;
-    private static final int MILLISECONDS_BETWEEN_TICKS = 1000 / UPDATES_PER_SECOND;
+    private static final double NS_BETWEEN_TICKS = 1000000000.0 / UPDATES_PER_SECOND;
     private static final float DT = 1.0f / UPDATES_PER_SECOND;
 
     private boolean isRunning = true;
@@ -18,19 +18,23 @@ public class GameLoop {
         this.fps = new FPS();
     }
 
+    private long time() {
+        return System.nanoTime();
+    }
+
     public void run(Window window) {
         startThreadToPrintFps(window);
 
-        long nextUpdate = System.currentTimeMillis();
+        double nextUpdate = time();
         float interpolation;
         while (isRunning && !window.windowShouldClose()) {
 
-            while(System.currentTimeMillis() > nextUpdate) {
+            while(time() > nextUpdate) {
                 engine.update(DT);
-                nextUpdate += MILLISECONDS_BETWEEN_TICKS;
+                nextUpdate += NS_BETWEEN_TICKS;
             }
 
-            interpolation = (float) (System.currentTimeMillis() + MILLISECONDS_BETWEEN_TICKS - nextUpdate) / (float) MILLISECONDS_BETWEEN_TICKS;
+            interpolation = (float) (time() + NS_BETWEEN_TICKS - nextUpdate) / (float) NS_BETWEEN_TICKS;
             engine.render(interpolation);
         }
     }
@@ -44,5 +48,10 @@ public class GameLoop {
                 } catch (InterruptedException e) {}
             }
         }).start();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.nanoTime());
+        System.out.println(System.currentTimeMillis());
     }
 }
