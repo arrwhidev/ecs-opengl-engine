@@ -14,6 +14,9 @@ public class Transformation {
         float newX = ((position.x() - position.prevX()) * interp) + position.x();
         float newY = ((position.y() - position.prevY()) * interp) + position.y();
 
+//        float newX = position.x();
+//        float newY = position.y();
+
         return MODEL_VIEW_MATRIX.identity()
                 .mul(camera.getProjection())
                 .translate(newX, newY,0)

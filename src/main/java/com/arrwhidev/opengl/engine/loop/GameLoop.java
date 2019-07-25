@@ -6,66 +6,50 @@ import com.arrwhidev.opengl.engine.Window;
 public class GameLoop {
 
     private static final int UPDATES_PER_SECOND = 30;
-    private static final double NS_BETWEEN_TICKS = 1000000000.0 / UPDATES_PER_SECOND;
+    private static final double NS_PER_SECOND = 1000000000.0;
+    private static final float NS_BETWEEN_TICKS = (float) NS_PER_SECOND / UPDATES_PER_SECOND;
     private static final float DT = 1.0f / UPDATES_PER_SECOND;
 
     private boolean isRunning = true;
-    private FPS fps;
     private GameEngine engine;
 
     public GameLoop(GameEngine engine) {
         this.engine = engine;
-        this.fps = new FPS();
     }
 
-    private long time() {
+    private long now() {
         return System.nanoTime();
     }
 
     public void run(Window window) {
-        startThreadToPrintFps(window);
+        long now = now();
 
-        long timer = System.currentTimeMillis();
-
+        // For FPS measurements.
+        long timer = now;
         int frames = 0;
         int updates = 0;
 
-        double nextUpdate = time();
+        double nextUpdate = now;
         float interpolation;
         while (isRunning && !window.windowShouldClose()) {
+            long t = now();
 
-            while(time() > nextUpdate) {
+            while(t >= nextUpdate) {
                 engine.update(DT);
                 nextUpdate += NS_BETWEEN_TICKS;
                 updates++;
             }
 
-            interpolation = (float) (time() + NS_BETWEEN_TICKS - nextUpdate) / (float) NS_BETWEEN_TICKS;
+            interpolation = (float) (t + NS_BETWEEN_TICKS - nextUpdate) / NS_BETWEEN_TICKS;
             engine.render(interpolation);
             frames++;
 
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                System.out.println("ups="+updates+",fps="+frames);
+            if (t - timer >= NS_PER_SECOND) {
+                timer += NS_PER_SECOND;
+                System.out.println("ups="+updates+", fps="+frames);
                 updates = 0;
                 frames = 0;
             }
         }
-    }
-
-    private void startThreadToPrintFps(Window window) {
-//        new Thread(() -> {
-//            while(isRunning && !window.windowShouldClose()) {
-//                System.out.println(fps);
-//                try {
-//                    Thread.sleep(1000 * 2);
-//                } catch (InterruptedException e) {}
-//            }
-//        }).start();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(System.nanoTime());
-        System.out.println(System.currentTimeMillis());
     }
 }
