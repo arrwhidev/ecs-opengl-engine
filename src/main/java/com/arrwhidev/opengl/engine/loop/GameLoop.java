@@ -2,12 +2,11 @@ package com.arrwhidev.opengl.engine.loop;
 
 import com.arrwhidev.opengl.engine.GameEngine;
 import com.arrwhidev.opengl.engine.Window;
+import org.lwjgl.glfw.GLFW;
 
 public class GameLoop {
 
     private static final int UPDATES_PER_SECOND = 30;
-    private static final double NS_PER_SECOND = 1000000000.0;
-    private static final float NS_BETWEEN_TICKS = (float) NS_PER_SECOND / UPDATES_PER_SECOND;
     private static final float DT = 1.0f / UPDATES_PER_SECOND;
 
     private boolean isRunning = true;
@@ -17,38 +16,39 @@ public class GameLoop {
         this.engine = engine;
     }
 
-    private long now() {
-        return System.nanoTime();
-    }
-
     public void run(Window window) {
-        long now = now();
+        double currentTime = GLFW.glfwGetTime();
 
         // For FPS measurements.
-        long timer = now;
+        double timer = currentTime;
         int frames = 0;
         int updates = 0;
 
-        double nextUpdate = now;
-        float interpolation;
-        while (isRunning && !window.windowShouldClose()) {
-            long t = now();
+        float accumulator = 0.0f;
 
-            while(t >= nextUpdate) {
+        while (isRunning && !window.windowShouldClose()) {
+            double newTime = GLFW.glfwGetTime();
+            double frameTime = newTime - currentTime;
+
+            // Avoid spiral of death
+            if (frameTime > 0.25f) frameTime = 0.25f;
+
+            currentTime = newTime;
+            accumulator += frameTime;
+
+            // Logic update
+            while (accumulator >= DT) {
+                accumulator -= DT;
                 engine.update(DT);
-                nextUpdate += NS_BETWEEN_TICKS;
                 updates++;
             }
 
-            interpolation = (float) (t + NS_BETWEEN_TICKS - nextUpdate) / NS_BETWEEN_TICKS;
-            if (interpolation > 1) interpolation = 1;
-            else if (interpolation < 0) interpolation = 0;
-
-            engine.render(interpolation);
+            float interp = accumulator / DT;
+            engine.render(interp);
             frames++;
 
-            if (t - timer >= NS_PER_SECOND) {
-                timer += NS_PER_SECOND;
+            if (newTime - timer >= 1) {
+                timer += 1;
                 System.out.println("ups="+updates+", fps="+frames);
                 updates = 0;
                 frames = 0;
