@@ -28,8 +28,8 @@ public class TestEntityFactory {
     public void createTestEntities(Window window) {
         QuadFactory.createRandom(
             new Vector2f(400, 400),
-            new Vector2f(160, 100),
-            20
+            new Vector2f(200, 0),
+            30
         );
     }
 }
