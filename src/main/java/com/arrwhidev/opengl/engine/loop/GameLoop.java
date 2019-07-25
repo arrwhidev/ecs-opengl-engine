@@ -41,6 +41,9 @@ public class GameLoop {
             }
 
             interpolation = (float) (t + NS_BETWEEN_TICKS - nextUpdate) / NS_BETWEEN_TICKS;
+            if (interpolation > 1) interpolation = 1;
+            else if (interpolation < 0) interpolation = 0;
+
             engine.render(interpolation);
             frames++;
 
