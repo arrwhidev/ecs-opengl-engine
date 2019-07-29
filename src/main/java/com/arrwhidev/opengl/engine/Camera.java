@@ -41,12 +41,9 @@ public class Camera {
     }
 
     public Matrix4f getProjection() {
-        Matrix4f target = new Matrix4f();
         Matrix4f pos = new Matrix4f()
                 .scale(scale)
                 .setTranslation(new Vector3f(position.x, position.y, 0));
-
-        target = projection.mul(pos, target);
-        return target;
+        return projection.mul(pos);
     }
 }

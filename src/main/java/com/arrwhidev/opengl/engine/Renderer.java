@@ -21,7 +21,9 @@ public abstract class Renderer {
     public abstract void renderEntity(Entity e, float interpolation);
 
     private void renderEntities(float interpolation) {
-        EntityManager.getEntities().forEach(e -> renderEntity(e, interpolation));
+        for (Entity e : EntityManager.getEntities()) {
+            renderEntity(e, interpolation);
+        }
     }
 
     private final void clear() {

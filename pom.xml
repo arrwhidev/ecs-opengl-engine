@@ -21,8 +21,8 @@
 
     <properties>
         <pngdecoder.version>1.0</pngdecoder.version>
-        <joml.version>1.9.11</joml.version>
-        <lwjgl.version>3.1.6</lwjgl.version>
+        <joml.version>1.9.16</joml.version>
+        <lwjgl.version>3.2.2</lwjgl.version>
         <lwjgl.natives>natives-macos</lwjgl.natives>
     </properties>
 
