@@ -130,4 +130,8 @@ public class Window {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
     }
+
+    public void setTitle(String title) {
+        glfwSetWindowTitle(windowHandle, title);
+    }
 }

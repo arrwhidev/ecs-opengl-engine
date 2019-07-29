@@ -49,7 +49,7 @@ public class GameLoop {
 
             if (newTime - timer >= 1) {
                 timer += 1;
-                System.out.println("ups="+updates+", fps="+frames);
+                window.setTitle("ups="+updates+", fps="+frames);
                 updates = 0;
                 frames = 0;
             }
